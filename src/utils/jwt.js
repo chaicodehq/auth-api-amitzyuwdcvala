@@ -29,6 +29,10 @@ import jwt from 'jsonwebtoken';
  */
 export function signToken(payload) {
   // Your code here
+  const secret = process.env.JWT_SECRET;
+  const expiresIn = process.env.JWT_EXPIRES_IN;
+
+  return jwt.sign(payload, secret, {expiresIn});
 }
 
 /**
@@ -67,4 +71,11 @@ export function signToken(payload) {
  */
 export function verifyToken(token) {
   // Your code here
+  if(!token) {
+    throw new Error("Token not found");
+  }
+
+  const secret = process.env.JWT_SECRET;
+
+  return jwt.verify(token, secret);
 }
